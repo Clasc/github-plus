@@ -30,12 +30,10 @@ const logger = {
     // Function to create and inject the Hello World button
     function injectHelloWorldButton() {
         // Look for the comment form container
-        const commentForm = document.querySelector('#new_comment_field') ||
-                           document.querySelector('.timeline-comment-wrapper form') ||
-                           document.querySelector('form[data-turbo-frame="repo-content-turbo-frame"]');
+        const sidebar = document.getElementById('partial-discussion-sidebar');
 
-        if (!commentForm) {
-            logger.log('Comment form not found, retrying...');
+        if (!sidebar) {
+            logger.log('Sidebar not found, retrying...');
             setTimeout(injectHelloWorldButton, 1000);
             return;
         }
@@ -62,30 +60,20 @@ const logger = {
         });
 
         // Find the best insertion point (underneath the comment text field)
-        const textArea = commentForm;
 
+        const textArea = document.querySelector('#new_comment_field, textarea');
         if (!textArea) {
-            logger.error('Textarea not found in comment form');
+            logger.error('Textarea not found');
             return;
         }
         // Look for the parent container of the textarea
-        const textAreaContainer = textArea.closest('.form-group') ||
-                                textArea.closest('.timeline-comment-wrapper') ||
-                                textArea.parentElement;
 
         // Create a container for our button
         const buttonContainer = document.createElement('div');
         buttonContainer.className = 'github-plus-button-container';
         buttonContainer.appendChild(button);
 
-        // Insert after the textarea container
-        if (textAreaContainer && textAreaContainer.parentNode) {
-            textAreaContainer.parentNode.insertBefore(buttonContainer, textAreaContainer.nextSibling);
-        } else {
-            // Fallback: append to the form
-            commentForm.appendChild(buttonContainer);
-        }
-
+        sidebar.appendChild(buttonContainer);
         logger.log('Hello World button injected successfully!');
     }
 
