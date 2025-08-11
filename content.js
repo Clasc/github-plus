@@ -48,15 +48,15 @@ const logger = {
         button.id = 'github-plus-hello-button';
         button.type = 'button';
         button.className = 'btn btn-outline github-plus-button';
-        button.textContent = 'Hello World';
+        button.textContent = 'run e2e tests';
         button.style.marginTop = '8px';
         button.style.marginRight = '8px';
 
-        // Add click handler (does nothing as requested)
+        // Add click handler to comment on PR
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            // Button does nothing on click as requested
-            logger.log('Hello World button clicked!');
+            logger.log('run e2e tests button clicked!');
+            addCommentToPR();
         });
 
         // Find the best insertion point (underneath the comment text field)
@@ -74,7 +74,34 @@ const logger = {
         buttonContainer.appendChild(button);
 
         sidebar.appendChild(buttonContainer);
-        logger.log('Hello World button injected successfully!');
+        logger.log('run e2e tests button injected successfully!');
+    }
+
+    // Function to add comment to PR
+    function addCommentToPR() {
+        // Find the comment textarea
+        const textarea = document.querySelector('#new_comment_field, textarea[name="comment[body]"]');
+        if (!textarea) {
+            logger.error('Comment textarea not found');
+            return;
+        }
+
+        // Set the comment text
+        textarea.value = 'run e2e';
+        textarea.focus();
+
+        // Trigger input event to ensure GitHub recognizes the change
+        const inputEvent = new Event('input', { bubbles: true });
+        textarea.dispatchEvent(inputEvent);
+
+        // Find and click the submit button
+        const submitButton = document.querySelector('button[type="submit"][data-disable-with="Commenting..."], button.js-quick-submit-alternative');
+        if (submitButton && !submitButton.disabled) {
+            submitButton.click();
+            logger.log('Comment "run e2e" added to PR');
+        } else {
+            logger.error('Submit button not found or disabled');
+        }
     }
 
     // Function to handle dynamic content loading (GitHub uses AJAX)
