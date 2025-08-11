@@ -1,0 +1,38 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .main { fill: #ffc217; }
+      .secondary { fill: #0f275f; }
+    </style>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" class="main"/>
+
+  <!-- Cat head -->
+  <ellipse cx="64" cy="55" rx="25" ry="22" class="secondary"/>
+
+  <!-- Cat ears -->
+  <ellipse cx="50" cy="40" rx="8" ry="12" class="secondary" transform="rotate(-25 50 40)"/>
+  <ellipse cx="78" cy="40" rx="8" ry="12" class="secondary" transform="rotate(25 78 40)"/>
+
+  <!-- Eyes -->
+  <circle cx="57" cy="50" r="3" class="main"/>
+  <circle cx="71" cy="50" r="3" class="main"/>
+
+  <!-- Nose -->
+  <ellipse cx="64" cy="58" rx="2" ry="1.5" class="main"/>
+
+  <!-- Cat body (simplified) -->
+  <ellipse cx="64" cy="85" rx="20" ry="15" class="secondary"/>
+
+  <!-- Paws -->
+  <circle cx="52" cy="95" r="6" class="secondary"/>
+  <circle cx="76" cy="95" r="6" class="secondary"/>
+
+  <!-- Plus symbol overlay -->
+  <g transform="translate(85, 25)">
+    <rect x="-1.5" y="-8" width="3" height="16" class="secondary" rx="1.5"/>
+    <rect x="-8" y="-1.5" width="16" height="3" class="secondary" rx="1.5"/>
+  </g>
+</svg>
