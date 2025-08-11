@@ -1,6 +1,5 @@
 // Content script for GitHub Plus extension
-// This script runs on GitHub PR pages and injects a "Hello World" button
-
+// This script injects a "run e2e tests" button into the GitHub PR comment section
 const logger = {
     log: function(message) {
         if (typeof console !== 'undefined' && console.log) {
@@ -14,43 +13,36 @@ const logger = {
     }
 };
 
+function createButton({id, textContent}) {
+    const button = document.createElement('button');
+    button.id = id;
+    button.type = 'button';
+    button.className = 'btn btn-outline github-plus-button';
+    button.textContent = textContent;
+    button.style.marginTop = '8px';
+    button.style.marginRight = '8px';
+    return button;
+}
+
 (function() {
     'use strict';
-
-    // Wait for the page to load
-    function waitForElement(selector, callback) {
-        const element = document.querySelector(selector);
-        if (element) {
-            callback(element);
-        } else {
-            setTimeout(() => waitForElement(selector, callback), 100);
-        }
-    }
-
-    // Function to create and inject the Hello World button
-    function injectHelloWorldButton() {
+    function injectButton() {
         // Look for the comment form container
         const sidebar = document.getElementById('partial-discussion-sidebar');
 
         if (!sidebar) {
             logger.log('Sidebar not found, retrying...');
-            setTimeout(injectHelloWorldButton, 1000);
+            setTimeout(injectButton, 1000);
             return;
         }
 
         // Check if button already exists
-        if (document.querySelector('#github-plus-hello-button')) {
+        if (document.querySelector('#github-plus-e2e-button')) {
             return;
         }
 
         // Create the button
-        const button = document.createElement('button');
-        button.id = 'github-plus-hello-button';
-        button.type = 'button';
-        button.className = 'btn btn-outline github-plus-button';
-        button.textContent = 'run e2e tests';
-        button.style.marginTop = '8px';
-        button.style.marginRight = '8px';
+        const button = createButton({id:"github-plus-e2e-button", textContent: 'Run e2e Tests'});
 
         // Add click handler to comment on PR
         button.addEventListener('click', function(e) {
@@ -58,23 +50,11 @@ const logger = {
             logger.log('run e2e tests button clicked!');
             addCommentToPR();
         });
-
-        // Find the best insertion point (underneath the comment text field)
-
-        const textArea = document.querySelector('#new_comment_field, textarea');
-        if (!textArea) {
-            logger.error('Textarea not found');
-            return;
-        }
-        // Look for the parent container of the textarea
-
         // Create a container for our button
         const buttonContainer = document.createElement('div');
         buttonContainer.className = 'github-plus-button-container';
         buttonContainer.appendChild(button);
-
         sidebar.appendChild(buttonContainer);
-        logger.log('run e2e tests button injected successfully!');
     }
 
     // Function to add comment to PR
@@ -116,7 +96,7 @@ const logger = {
                     });
 
                     if (hasCommentForm) {
-                        setTimeout(injectHelloWorldButton, 100);
+                        setTimeout(injectButton, 100);
                     }
                 }
             });
@@ -133,16 +113,14 @@ const logger = {
         logger.log('Content script loaded on PR page');
 
         // Initial injection attempt
-        setTimeout(injectHelloWorldButton, 1000);
+        setTimeout(injectButton, 1000);
 
         // Set up observer for dynamic content
         observePageChanges();
 
         // Also try again when the page seems fully loaded
-        document.addEventListener('DOMContentLoaded', injectHelloWorldButton);
-        window.addEventListener('load', injectHelloWorldButton);
+        document.addEventListener('DOMContentLoaded', injectButton);
+        window.addEventListener('load', injectButton);
     }
-
-    // Start the extension
     init();
 })();
