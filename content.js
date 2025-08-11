@@ -65,29 +65,29 @@ const logger = {
         const textArea = commentForm.querySelector('textarea') ||
                         commentForm.querySelector('#new_comment_field');
 
-        if (textArea) {
-            // Look for the parent container of the textarea
-            const textAreaContainer = textArea.closest('.form-group') ||
-                                    textArea.closest('.timeline-comment-wrapper') ||
-                                    textArea.parentElement;
-
-            // Create a container for our button
-            const buttonContainer = document.createElement('div');
-            buttonContainer.className = 'github-plus-button-container';
-            buttonContainer.appendChild(button);
-
-            // Insert after the textarea container
-            if (textAreaContainer && textAreaContainer.parentNode) {
-                textAreaContainer.parentNode.insertBefore(buttonContainer, textAreaContainer.nextSibling);
-            } else {
-                // Fallback: append to the form
-                commentForm.appendChild(buttonContainer);
-            }
-
-            logger.log('Hello World button injected successfully!');
-        } else {
+        if (!textArea) {
             logger.error('Textarea not found in comment form');
+            return;
         }
+        // Look for the parent container of the textarea
+        const textAreaContainer = textArea.closest('.form-group') ||
+                                textArea.closest('.timeline-comment-wrapper') ||
+                                textArea.parentElement;
+
+        // Create a container for our button
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'github-plus-button-container';
+        buttonContainer.appendChild(button);
+
+        // Insert after the textarea container
+        if (textAreaContainer && textAreaContainer.parentNode) {
+            textAreaContainer.parentNode.insertBefore(buttonContainer, textAreaContainer.nextSibling);
+        } else {
+            // Fallback: append to the form
+            commentForm.appendChild(buttonContainer);
+        }
+
+        logger.log('Hello World button injected successfully!');
     }
 
     // Function to handle dynamic content loading (GitHub uses AJAX)
