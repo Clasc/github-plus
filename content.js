@@ -62,8 +62,7 @@ const logger = {
         });
 
         // Find the best insertion point (underneath the comment text field)
-        const textArea = commentForm.querySelector('textarea') ||
-                        commentForm.querySelector('#new_comment_field');
+        const textArea = commentForm;
 
         if (!textArea) {
             logger.error('Textarea not found in comment form');
