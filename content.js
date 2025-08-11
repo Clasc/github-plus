@@ -1,6 +1,19 @@
 // Content script for GitHub Plus extension
 // This script runs on GitHub PR pages and injects a "Hello World" button
 
+const logger = {
+    log: function(message) {
+        if (typeof console !== 'undefined' && console.log) {
+            console.log(`GitHub Plus: ${message}`);
+        }
+    },
+    error: function(message) {
+        if (typeof console !== 'undefined' && console.error) {
+            console.error(`GitHub Plus Error: ${message}`);
+        }
+    }
+};
+
 (function() {
     'use strict';
 
@@ -22,7 +35,7 @@
                            document.querySelector('form[data-turbo-frame="repo-content-turbo-frame"]');
 
         if (!commentForm) {
-            console.log('GitHub Plus: Comment form not found, retrying...');
+            logger.log('Comment form not found, retrying...');
             setTimeout(injectHelloWorldButton, 1000);
             return;
         }
@@ -45,7 +58,7 @@
         button.addEventListener('click', function(e) {
             e.preventDefault();
             // Button does nothing on click as requested
-            console.log('GitHub Plus: Hello World button clicked!');
+            logger.log('Hello World button clicked!');
         });
 
         // Find the best insertion point (underneath the comment text field)
@@ -71,9 +84,9 @@
                 commentForm.appendChild(buttonContainer);
             }
 
-            console.log('GitHub Plus: Hello World button injected successfully!');
+            logger.log('Hello World button injected successfully!');
         } else {
-            console.log('GitHub Plus: Textarea not found in comment form');
+            logger.error('Textarea not found in comment form');
         }
     }
 
@@ -103,7 +116,7 @@
 
     // Initialize the extension
     function init() {
-        console.log('GitHub Plus: Content script loaded on PR page');
+        logger.log('Content script loaded on PR page');
 
         // Initial injection attempt
         setTimeout(injectHelloWorldButton, 1000);
