@@ -1,0 +1,66 @@
+/* Styles for GitHub Plus extension */
+
+.github-plus-button-container {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 8px 0;
+}
+
+.github-plus-button {
+    background-color: #f6f8fa;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    color: #24292f;
+    cursor: pointer;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 6px 16px;
+    transition: background-color 0.2s, border-color 0.2s;
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.github-plus-button:hover {
+    background-color: #f3f4f6;
+    border-color: #d0d7de;
+    text-decoration: none;
+}
+
+.github-plus-button:active {
+    background-color: #e5e7ea;
+    border-color: #d0d7de;
+}
+
+.github-plus-button:focus {
+    border-color: #0969da;
+    box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.3);
+    outline: none;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .github-plus-button {
+        background-color: #21262d;
+        border-color: #30363d;
+        color: #f0f6fc;
+    }
+
+    .github-plus-button:hover {
+        background-color: #30363d;
+        border-color: #8b949e;
+    }
+
+    .github-plus-button:active {
+        background-color: #282e33;
+    }
+}
+
+/* Ensure button doesn't interfere with GitHub's layout */
+.github-plus-button-container {
+    clear: both;
+    display: block;
+    width: 100%;
+}

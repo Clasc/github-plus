@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Plus</title>
+    <style>
+        body {
+            width: 300px;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            color: #24292f;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #656d76;
+            font-size: 12px;
+        }
+
+        .status {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .status.active {
+            background-color: #dafbe1;
+            color: #1a7f37;
+            border: 1px solid #1a7f37;
+        }
+
+        .status.inactive {
+            background-color: #fff8dc;
+            color: #9a6700;
+            border: 1px solid #d1a336;
+        }
+
+        .info {
+            background-color: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+
+        .info-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .info-text {
+            color: #656d76;
+            font-size: 12px;
+        }
+
+        .button {
+            background-color: #0969da;
+            border: 1px solid #0969da;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            width: 100%;
+            display: block;
+            margin-top: 12px;
+        }
+
+        .button:hover {
+            background-color: #0860ca;
+            border-color: #0860ca;
+        }
+
+        .version {
+            text-align: center;
+            color: #656d76;
+            font-size: 11px;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">GitHub Plus</div>
+        <div class="description">Enhancing your GitHub experience</div>
+    </div>
+
+    <div id="status" class="status inactive">
+        <div id="status-text">Extension inactive</div>
+    </div>
+
+    <div class="info">
+        <div class="info-title">How it works</div>
+        <div class="info-text">
+            Navigate to any GitHub Pull Request page to see the "Hello World" button appear underneath the comment text field.
+        </div>
+    </div>
+
+    <div class="info">
+        <div class="info-title">Features</div>
+        <div class="info-text">
+            • Injects Hello World button on PR pages<br>
+            • Works with GitHub's dynamic loading<br>
+            • Matches GitHub's design system
+        </div>
+    </div>
+
+    <a href="https://github.com" class="button" target="_blank">
+        Open GitHub
+    </a>
+
+    <div class="version">
+        Version 1.0.0
+    </div>
+
+    <script>
+        // Check if we're on a GitHub PR page
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            const currentTab = tabs[0];
+            const statusElement = document.getElementById('status');
+            const statusText = document.getElementById('status-text');
+
+            if (currentTab.url && currentTab.url.includes('github.com') && currentTab.url.includes('/pull/')) {
+                statusElement.className = 'status active';
+                statusText.textContent = 'Active on GitHub PR page';
+            } else if (currentTab.url && currentTab.url.includes('github.com')) {
+                statusElement.className = 'status inactive';
+                statusText.textContent = 'GitHub detected - navigate to a PR';
+            } else {
+                statusElement.className = 'status inactive';
+                statusText.textContent = 'Not on GitHub';
+            }
+        });
+    </script>
+</body>
+</html>
