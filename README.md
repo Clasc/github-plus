@@ -1,6 +1,6 @@
 # GitHub Plus Chrome Extension
 
-A simple Chrome browser extension that enhances GitHub Pull Request pages by injecting a "Hello World" button underneath the comment text field.
+A simple Chrome browser extension that enhances GitHub Pull Request pages by injecting a "run e2e tests" button that automatically comments "run e2e" on the PR when clicked.
 
 ## Features
 
@@ -24,8 +24,9 @@ A simple Chrome browser extension that enhances GitHub Pull Request pages by inj
 ### Verify Installation
 
 1. Navigate to any GitHub Pull Request page (e.g., `https://github.com/owner/repo/pull/123`)
-2. Look for the "Hello World" button underneath the comment text field
-3. The extension popup should show "Active on GitHub PR page" when clicked
+2. Look for the "run e2e tests" button underneath the comment text field
+3. Click the button to automatically post a "run e2e" comment on the PR
+4. The extension popup should show "Active on GitHub PR page" when clicked
 
 ## File Structure
 
@@ -42,9 +43,10 @@ github-plus/
 ## How It Works
 
 1. **Content Script**: The `content.js` file runs on GitHub PR pages and searches for the comment form
-2. **Button Injection**: Creates a "Hello World" button and inserts it underneath the comment textarea
-3. **Dynamic Monitoring**: Uses MutationObserver to handle GitHub's dynamic content loading
-4. **Styling**: Applies GitHub-matching styles from `styles.css`
+2. **Button Injection**: Creates a "run e2e tests" button and inserts it underneath the comment textarea
+3. **Comment Automation**: When clicked, automatically fills the comment field with "run e2e" and submits it
+4. **Dynamic Monitoring**: Uses MutationObserver to handle GitHub's dynamic content loading
+5. **Styling**: Applies GitHub-matching styles from `styles.css`
 
 ## Technical Details
 
